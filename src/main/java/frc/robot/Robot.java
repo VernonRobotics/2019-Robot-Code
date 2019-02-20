@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -31,7 +35,8 @@ public class Robot extends TimedRobot {
   
   public static DriveTrain driveTrain = new DriveTrain(RobotMap.frontLeft, RobotMap.backLeft, RobotMap.frontRight, RobotMap.backRight);
   public static Jacks jacks = new Jacks();
-  //public static Tower tower = new Tower();
+  public static TowerSubsystem towerSubsystem = new TowerSubsystem();
+  public static ArmSubsystem armSubsystem = new ArmSubsystem();
   public static OI oi;
 
   Command m_autonomousCommand;
@@ -42,6 +47,12 @@ public class Robot extends TimedRobot {
   NetworkTableEntry robotState;
   NetworkTableEntry yEntry;
   NetworkTableEntry angleEntry;
+
+  NetworkTableInstance cameraInstance;
+  NetworkTable cameraTable;
+  UsbCamera camera1;
+  UsbCamera camera2;
+  boolean prevTrigger = false;
 
   private static double y;
   private static double angle;
@@ -55,7 +66,7 @@ public class Robot extends TimedRobot {
     y = 0;
     angle = 0;
     oi = new OI();
-    RobotMap.gyro.calibrate();
+    //RobotMap.gyro.calibrate();
     RobotMap.backRight.setInverted(true);
     RobotMap.frontRight.setInverted(true);
 
@@ -65,7 +76,9 @@ public class Robot extends TimedRobot {
     RobotMap.frontJack.setNeutralMode(NeutralMode.Brake);
     RobotMap.backJack.setNeutralMode(NeutralMode.Brake);
 
-    /*inst = NetworkTableInstance.getDefault();
+    RobotMap.tower.setNeutralMode(NeutralMode.Brake);
+
+    inst = NetworkTableInstance.getDefault();
     visionTable = inst.getTable("VisionTable");
     robotState = visionTable.getEntry("RobotState");
     yEntry = visionTable.getEntry("Y");
@@ -81,11 +94,40 @@ public class Robot extends TimedRobot {
           return;
         }
         y = yEntry.getDouble(0.0);
-        System.out.println(y);
         angle = angleEntry.getDouble(0.0);
+        //System.out.println(y + " " + angle);
       }
     });
-    networkTableThread.start();*/
+    networkTableThread.start();
+
+    //camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+    //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+    
+    /*camera1 = new UsbCamera("Front Camera", 0);
+    MjpegServer mjpegServer1 = new MjpegServer("serve_USB Camera",  1181);
+    mjpegServer1.setSource(camera1);*/
+
+
+    /*new Thread(() -> {
+      camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+      camera1.setResolution(640, 480);
+      CvSink cvSink1 = CameraServer.getInstance().getVideo();
+
+      camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+      camera2.setResolution(640, 480);
+      CvSink cvSink2 = CameraServer.getInstance().getVideo();
+      
+
+
+      while(!Thread.interrupted()) {
+
+      }
+
+      cameraInstance = NetworkTableInstance.getDefault();
+      cameraTable = cameraInstance.getTable("");
+      
+      
+    });*/
 
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -102,6 +144,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if(oi.driveStick.getRawButton(11)) {
+      
+    } else {
+
+    }
   }
 
   /**
@@ -111,7 +158,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    //robotState.setString("disabled");
+    robotState.setString("disabled");
   }
 
   @Override
@@ -133,7 +180,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
-    //robotState.setString("autonomous");
+    robotState.setString("autonomous");
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -162,7 +209,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     
-    //robotState.setString("teleop");
+    robotState.setString("teleop");
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -173,6 +220,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    //System.out.print(RobotMap.jackDrivenMotor.getSelectedSensorPosition());
+    //System.out.print(RobotMap.frontJack.getOutputCurrent());
+    System.out.print(" " + RobotMap.frontJack.getSelectedSensorPosition());
+    System.out.print(" " + RobotMap.backJack.getSelectedSensorPosition()+ "\n");
+    //System.out.println(" " + RobotMap.frontJack.get() + " " + RobotMap.backJack.get() + " ");
+    /*if(RobotMap.frontJack.getOutputCurrent() > 2 || RobotMap.backJack.getOutputCurrent() > 2) {
+      System.out.print(RobotMap.frontJack.getOutputCurrent()+" ");
+      System.out.println(RobotMap.backJack.getOutputCurrent());
+    }*/
+
     Scheduler.getInstance().run();
   }
 

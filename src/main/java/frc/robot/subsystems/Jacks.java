@@ -7,10 +7,16 @@
 
 package frc.robot.subsystems;
 
+import java.util.concurrent.TimeUnit;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.CANTalon1989;
 import frc.robot.JsScaled;
+import frc.robot.MotorSynchronization;
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
 
@@ -21,16 +27,38 @@ public class Jacks extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private CANTalon1989 motor;
+  private CANTalon1989 jackDrivenMotor = RobotMap.jackDrivenMotor;
+  private CANTalon1989 frontJack = RobotMap.frontJack;
+  private CANTalon1989 backJack = RobotMap.backJack;
 
+  //public MotorSynchronization motorSync = new MotorSynchronization(frontJack, backJack);
+
+  int frontJackEncoderValue;
+  int backJackEncoderValue;
+
+  int frontJackPreviousEncoderValue;
+  int backJackPreviousEncoderValue;
+  
+  int delta;
+  int overallDelta;
+
+  int speed;
+  int counter = 0;
+
+  static double error = 0;
+  static final double kP = 0.005;
+  double powerChange;
+
+  double frontJackSpeed;
+  double backJackSpeed;
+  
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new MoveJackMotor());
   }
 
-  public void driveForward(CANTalon1989 motor, double speed) {
-    this.motor = motor;
-    motor.set(speed);
+  public void driveForward(double speed) {
+    jackDrivenMotor.set(speed);
   }
 
   public void moveJacks(JsScaled joystick) {
@@ -47,22 +75,57 @@ public class Jacks extends Subsystem {
   }
 
   public void moveJacksAuto(CANTalon1989 motor, double speed) {
-    this.motor = motor;
     motor.set(speed);
   }
 
-  public void stopMotor() {
-    motor.set(0);
+  public void calibrateJacks() {
+    frontJack.setSelectedSensorPosition(0);
+    backJack.setSelectedSensorPosition(0);
   }
 
-  public void moveJacksOnButton(CANTalon1989 jack1, CANTalon1989 jack2, double jack1Speed, double jack2Speed) {
-    jack1.set(jack1Speed);
-    jack2.set(jack2Speed);
+  private void getEncoderValues() {
+    frontJackEncoderValue = frontJack.getSelectedSensorPosition();
+    backJackEncoderValue = backJack.getSelectedSensorPosition();
+  }
+
+  public void moveJacks(double frontJackSpeed, double backJackSpeed) {
+    frontJack.set(frontJackSpeed);
+    backJack.set(backJackSpeed);
+  }
+  
+  public void synchronizedJacks(double speed) {
+    if(counter == 0) {
+      calibrateJacks();
+    }
+    
+    getEncoderValues();
+    int encoderDelta = frontJackEncoderValue - backJackEncoderValue;
+    if(speed == 0) {
+      frontJack.set(0);
+      backJack.set(0);
+    } else if(encoderDelta > 0) {
+      encoderDelta = Math.abs(encoderDelta);
+      backJack.set(speed-(encoderDelta * kP));
+      frontJack.set(speed+(encoderDelta * kP));
+    } else {
+      encoderDelta = Math.abs(encoderDelta);
+      backJack.set(speed+(encoderDelta * kP));
+      frontJack.set(speed-(encoderDelta * kP));
+    }
+
+    counter = 1;
+
+  }
+
+  public void stopDrivenMotor() {
+    jackDrivenMotor.stopMotor();
   }
 
   public void stopJacks() {
-    RobotMap.backJack.set(0);
-    RobotMap.frontJack.set(0);
+    backJack.set(0);
+    frontJack.set(0);
+    frontJack.stopMotor();
+    backJack.stopMotor();
   }
 
 }

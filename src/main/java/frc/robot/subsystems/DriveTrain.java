@@ -30,7 +30,7 @@ public class DriveTrain extends Subsystem {
   private double zRotation;
   private double gyroAngle;
 
-  private ADXRS450_Gyro gyro = RobotMap.gyro;
+  //private ADXRS450_Gyro gyro = RobotMap.gyro;
 
   private MecanumDrive mDrive;
 
@@ -54,7 +54,7 @@ public class DriveTrain extends Subsystem {
   public void drive(JsScaled joy) {
     getJoystickValues(joy);
     if(xSpeed == 0 && zRotation == 0) {
-      gyroAngle = gyro.getAngle();
+      //gyroAngle = gyro.getAngle();
       error = -gyroAngle;
       zRotation = kP * error;
     }
@@ -63,7 +63,7 @@ public class DriveTrain extends Subsystem {
 
   public void visionAssistedDrive(JsScaled joy, double computerYSpeed, double angle) {
     getJoystickValues(joy);
-    gyroAngle = gyro.getAngle(); 
+    //gyroAngle = gyro.getAngle(); 
     xSpeed = computerYSpeed;
     zRotation = angle;
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
@@ -76,7 +76,7 @@ public class DriveTrain extends Subsystem {
   }
 
   public void rotate(double angle) {
-    error = angle - gyro.getAngle();
+    //error = angle - gyro.getAngle();
     mDrive.driveCartesian(0, 0, error*kP);
   }
 

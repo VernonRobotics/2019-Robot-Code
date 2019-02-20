@@ -7,18 +7,41 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.CANTalon1989;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Tower extends Subsystem {
+public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  private CANTalon1989 ballMotor = RobotMap.ballMotor;
+  private Relay hatchPanelSolenoid = RobotMap.hatchPanelSolenoid;
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
+
+  public void controlSolenoid(String status) {
+    if(status == "forward") {
+      hatchPanelSolenoid.set(Relay.Value.kForward);
+    } else if(status == "reverse") {
+      hatchPanelSolenoid.set(Relay.Value.kReverse);
+    } 
+  }
+
+  public void ballMechanism(double speed) {
+    ballMotor.set(speed);
+  }
+
+  public void stop() {
+    ballMotor.stopMotor();
+  }
+
 }

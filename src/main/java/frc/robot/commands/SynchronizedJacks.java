@@ -8,35 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.CANTalon1989;
 import frc.robot.Robot;
 
-public class MoveJacksOnButton extends Command {
+public class SynchronizedJacks extends Command {
 
-  CANTalon1989 jack1;
-  CANTalon1989 jack2;
-  double jack1Speed;
-  double jack2Speed;
+  double speed;
 
-  public MoveJacksOnButton(CANTalon1989 jack1, CANTalon1989 jack2, double jack1Speed, double jack2Speed) {
+  public SynchronizedJacks(double speed) {
     // Use requires() here to declare subsystem dependencies
-    this.jack1 = jack1;
-    this.jack2 = jack2;
-    this.jack1Speed = jack1Speed;
-    this.jack2Speed = jack2Speed;
+    this.speed = speed;
     requires(Robot.jacks);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.jacks.moveJacks(jack1Speed, jack2Speed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    Robot.jacks.synchronizedJacks(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

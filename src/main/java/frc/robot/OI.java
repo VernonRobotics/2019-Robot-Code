@@ -25,15 +25,20 @@ public class OI {
   public Button setDefaultConfig = new JoystickButton(utilityStick, 8);
   public Button overrideAutomatedCommands = new JoystickButton(driveStick, 5);
 
+  public Button hatchPanelControl = new JoystickButton(utilityStick, 1);
+  public Button ballIntake = new JoystickButton(utilityStick, 2);
+  public Button ballOutput = new JoystickButton(utilityStick, 3);
 
   //Test Jacks
-  public Button allJacksUp = new JoystickButton(utilityStick, 9);
+  public Button allJacksRetract = new JoystickButton(utilityStick, 9);
   public Button allJacksDown = new JoystickButton(utilityStick, 10);
   public Button frontJacksRetract = new JoystickButton(utilityStick, 11);
   public Button backJacksRetract = new JoystickButton(utilityStick, 12);
 
   public Button frontJacksDown = new JoystickButton(utilityStick, 7);
   public Button backJacksDown = new JoystickButton(utilityStick, 8);
+
+  public Button calibrate = new JoystickButton(utilityStick, 2);
 
   public OI() {
     visionAssist.whileHeld(new AssistedDrive());
@@ -46,20 +51,34 @@ public class OI {
     frontJacksRetract.whileHeld(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -.5, 0));
     backJacksRetract.whileHeld(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.5));*/
   
-    allJacksUp.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .8, .8));
-    frontJacksRetract.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -.5, 0));
-    backJacksRetract.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.5));
+    //allJacksRetract.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .8, .8));
+    frontJacksRetract.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .5, 0));
+    backJacksRetract.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, .5));
 
-    allJacksUp.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    //allJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     frontJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     backJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
 
-    frontJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .8, 0));
-    backJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, .8));
+    frontJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, 0));
+    backJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -1));
     frontJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     backJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
-    allJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -.8, -.8));
-    allJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    
+    //allJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, -1));
+    //allJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+
+    allJacksDown.whenPressed(new SynchronizedJacks(-.8));
+    allJacksDown.whenReleased(new SynchronizedJacks(0));
+
+    allJacksRetract.whenPressed(new SynchronizedJacks(.8));
+    allJacksRetract.whenPressed(new SynchronizedJacks(0));
+
+    calibrate.whileHeld(new CalibrateJacks());
+
+    hatchPanelControl.whileHeld(new ControlSolenoid("forward"));
+    ballIntake.whileHeld(new BallMechanism(1));
+    ballOutput.whileHeld(new BallMechanism(-1));
+
   }
 
 }
