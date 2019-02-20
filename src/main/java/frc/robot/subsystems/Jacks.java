@@ -7,16 +7,10 @@
 
 package frc.robot.subsystems;
 
-import java.util.concurrent.TimeUnit;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.CANTalon1989;
 import frc.robot.JsScaled;
-import frc.robot.MotorSynchronization;
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
 

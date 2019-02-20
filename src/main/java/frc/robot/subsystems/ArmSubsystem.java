@@ -30,9 +30,9 @@ public class ArmSubsystem extends Subsystem {
 
   public void controlSolenoid(String status) {
     if(status == "forward") {
-      hatchPanelSolenoid.set(Relay.Value.kForward);
+      hatchPanelSolenoid.set(Relay.Value.kOn);
     } else if(status == "reverse") {
-      hatchPanelSolenoid.set(Relay.Value.kReverse);
+      hatchPanelSolenoid.set(Relay.Value.kOff);
     } 
   }
 

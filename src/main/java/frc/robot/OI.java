@@ -30,8 +30,9 @@ public class OI {
   public Button ballOutput = new JoystickButton(utilityStick, 3);
 
   //Test Jacks
-  public Button allJacksRetract = new JoystickButton(utilityStick, 9);
+  //public Button allJacksRetract = new JoystickButton(utilityStick, 9);
   public Button allJacksDown = new JoystickButton(utilityStick, 10);
+  public Button allJacksHold = new JoystickButton(utilityStick, 9);
   public Button frontJacksRetract = new JoystickButton(utilityStick, 11);
   public Button backJacksRetract = new JoystickButton(utilityStick, 12);
 
@@ -70,14 +71,23 @@ public class OI {
     allJacksDown.whenPressed(new SynchronizedJacks(-.8));
     allJacksDown.whenReleased(new SynchronizedJacks(0));
 
-    allJacksRetract.whenPressed(new SynchronizedJacks(.8));
-    allJacksRetract.whenPressed(new SynchronizedJacks(0));
+    allJacksHold.whenPressed(new SynchronizedJacks(-.3));
+    allJacksHold.whenReleased(new SynchronizedJacks(0));
 
-    calibrate.whileHeld(new CalibrateJacks());
+    //allJacksRetract.whenPressed(new SynchronizedJacks(.8));
+    //allJacksRetract.whenPressed(new SynchronizedJacks(0));
 
-    hatchPanelControl.whileHeld(new ControlSolenoid("forward"));
-    ballIntake.whileHeld(new BallMechanism(1));
-    ballOutput.whileHeld(new BallMechanism(-1));
+    calibrate.whenPressed(new CalibrateJacks(-.5, -.5));
+    calibrate.whenReleased(new CalibrateJacks(0, 0));
+
+    hatchPanelControl.whenPressed(new ControlSolenoid("forward"));
+    hatchPanelControl.whenReleased(new ControlSolenoid("reverse"));
+
+    ballIntake.whenPressed(new BallMechanism(1));
+    ballIntake.whenReleased(new BallMechanism(0));
+
+    ballOutput.whenPressed(new BallMechanism(-1));
+    ballOutput.whenReleased(new BallMechanism(0));
 
   }
 
