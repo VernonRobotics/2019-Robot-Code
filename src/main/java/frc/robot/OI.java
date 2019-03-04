@@ -43,9 +43,9 @@ public class OI {
 
   public OI() {
     visionAssist.whileHeld(new AssistedDrive());
-    activateJack.whenPressed(new AutoLift());
+    activateJack.whenPressed(new AutoLift("high"));
     //setDefaultConfig.whenPressed(new Command);
-    overrideAutomatedCommands.cancelWhenPressed(new AutoLift());
+    overrideAutomatedCommands.cancelWhenPressed(new AutoLift("high"));
 
     // Test Jacks
     /*allJacksUp.whileHeld(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .5, .5));

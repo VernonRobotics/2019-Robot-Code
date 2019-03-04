@@ -32,16 +32,11 @@ public class RobotMap {
 	//Talon for jack motor
 	public static CANTalon1989 jackDrivenMotor = new CANTalon1989(6);
 	
-	//static Servo servo = new Servo(0);
 	//public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(); 
 	
 	//Limit switches for jacks
-	//Upper Limit Switches activated when the jacks are fully deployed and ready for end game
-	public static DigitalInput frontJackUpperLimitSwitch = new DigitalInput(0);
-	public static DigitalInput backJackUpperLimitSwitch = new DigitalInput(1);
-	//Lower Limit Switches activated when the jacks are fully retracted and the robot is on the ground
-	public static DigitalInput frontJackLowerLimitSwitch = new DigitalInput(2);
-	public static DigitalInput backJackLowerLimitSwitch = new DigitalInput(3);
+	public static DigitalInput frontJackLimitSwitch = new DigitalInput(0);
+	public static DigitalInput backJackLimitSwitch = new DigitalInput(1);
 
 	/*public Encoder frontJackEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	public Encoder backJackEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);

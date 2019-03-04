@@ -10,26 +10,41 @@ package frc.robot.command_group;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.DriveJackMotorAuto;
-import frc.robot.commands.LiftJacksAuto;
+import frc.robot.commands.*;
 
 public class AutoLift extends CommandGroup {
 
-  public AutoLift() {
+  public AutoLift(String platform) {
+
+    final int jackHeight;
+
+    if(platform.equals("high")) {
+      jackHeight = 0;
+    } else {
+      jackHeight = 0;
+    }
+
     requires(Robot.jacks);
+    requires(Robot.jacksDriveTrain);
     requires(Robot.driveTrain);
 
-    double liftTime = 3;
-    double retractTime = 3;
-    double liftSpeed = 0.5;
-    double driveSpeed = 0.5;
+    final double jackHoldSpeed = -0.3;
+    final double jackCalibrateSpeed = -0.2;
+    final double liftTime = 3;
+    final double retractTime = 3;
+    final double liftSpeed = 0.5;
+    final double driveSpeed = 1;
 
-    addParallel(new LiftJacksAuto(RobotMap.frontJack, liftSpeed), liftTime);
-    addParallel(new LiftJacksAuto(RobotMap.backJack, liftSpeed), liftTime);
-    //addSequential(new DriveJackMotorAuto(RobotMap.jackDrivenMotor, RobotMap.frontJackLimitSwitch, driveSpeed));
-    addSequential(new LiftJacksAuto(RobotMap.frontJack, -liftSpeed), retractTime);
-    //addSequential(new DriveJackMotorAuto(RobotMap.jackDrivenMotor, RobotMap.backJackLimitSwitch, driveSpeed));
-    addSequential(new LiftJacksAuto(RobotMap.backJack, -liftSpeed), retractTime);
+    addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
+    addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
+    addSequential(new SynchronizedJacks(-.8), jackHeight);
+    addParallel(new SynchronizedJacks(jackHoldSpeed));
+    addSequential(new DriveJackMotorAuto(RobotMap.frontJackLimitSwitch, driveSpeed));
+    addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
+    addSequential(new LiftJacksAuto(RobotMap.frontJack, .8), retractTime);
+    addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
+    addSequential(new DriveJackMotorAuto(RobotMap.backJackLimitSwitch, driveSpeed));
+    addSequential(new LiftJacksAuto(RobotMap.backJack, .8), retractTime);
+    addSequential(new DriveAuto(0.2), 3);
   }
-  
 }

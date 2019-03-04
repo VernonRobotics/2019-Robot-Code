@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   
   public static DriveTrain driveTrain = new DriveTrain(RobotMap.frontLeft, RobotMap.backLeft, RobotMap.frontRight, RobotMap.backRight);
   public static Jacks jacks = new Jacks();
+  public static JacksDriveTrain jacksDriveTrain = new JacksDriveTrain();
   public static TowerSubsystem towerSubsystem = new TowerSubsystem();
   public static ArmSubsystem armSubsystem = new ArmSubsystem();
   public static OI oi;

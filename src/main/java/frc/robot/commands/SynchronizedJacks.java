@@ -9,10 +9,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class SynchronizedJacks extends Command {
 
-  double speed;
+  private double speed;
+  private int encoderGoal;
+
+  public SynchronizedJacks(double speed, int encoderGoal) {
+    // Use requires() here to declare subsystem dependencies
+    this.speed = speed;
+    this.encoderGoal = encoderGoal;
+    requires(Robot.jacks);
+  }
 
   public SynchronizedJacks(double speed) {
     // Use requires() here to declare subsystem dependencies
@@ -34,7 +43,15 @@ public class SynchronizedJacks extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if(encoderGoal == 0) {
+      return false;
+    } else {
+      if(RobotMap.frontJack.getSelectedSensorPosition() >= encoderGoal && RobotMap.backJack.getSelectedSensorPosition() >= encoderGoal) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   // Called once after isFinished returns true

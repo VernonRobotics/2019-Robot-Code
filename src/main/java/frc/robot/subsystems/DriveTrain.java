@@ -61,6 +61,10 @@ public class DriveTrain extends Subsystem {
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
   }
 
+  public void driveAuto(double speed) {
+    mDrive.driveCartesian(0, speed, 0);
+  }
+
   public void visionAssistedDrive(JsScaled joy, double computerYSpeed, double angle) {
     getJoystickValues(joy);
     //gyroAngle = gyro.getAngle(); 
