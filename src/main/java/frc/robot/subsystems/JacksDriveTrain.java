@@ -10,7 +10,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.MoveJackMotor;
 import frc.robot.CANTalon1989;
+import frc.robot.JsScaled;
 
 /**
  * Add your docs here.
@@ -24,11 +26,15 @@ public class JacksDriveTrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    //setDefaultCommand(new MoveJackMotor());
   }
 
   public void drive(double speed) {
     jackDrivenMotor.set(speed);
+  }
+
+  public void drive(JsScaled joystick) {
+    RobotMap.jackDrivenMotor.set(joystick.sgetY());
   }
 
   public void stop() {

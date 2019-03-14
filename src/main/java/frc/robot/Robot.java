@@ -77,6 +77,11 @@ public class Robot extends TimedRobot {
     RobotMap.frontJack.setNeutralMode(NeutralMode.Brake);
     RobotMap.backJack.setNeutralMode(NeutralMode.Brake);
 
+    RobotMap.frontLeft.setNeutralMode(NeutralMode.Brake);
+    RobotMap.backLeft.setNeutralMode(NeutralMode.Brake);
+    RobotMap.frontRight.setNeutralMode(NeutralMode.Brake);
+    RobotMap.backRight.setNeutralMode(NeutralMode.Brake);
+
     RobotMap.tower.setNeutralMode(NeutralMode.Brake);
 
     inst = NetworkTableInstance.getDefault();
@@ -101,15 +106,17 @@ public class Robot extends TimedRobot {
     });
     networkTableThread.start();
 
+    RobotMap.tower.setSelectedSensorPosition(0);
+
     //camera1 = CameraServer.getInstance().startAutomaticCapture(0);
     //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
     
     /*camera1 = new UsbCamera("Front Camera", 0);
     MjpegServer mjpegServer1 = new MjpegServer("serve_USB Camera",  1181);
-    mjpegServer1.setSource(camera1);*/
+    mjpegServer1.setSource(camera1);
 
 
-    /*new Thread(() -> {
+    new Thread(() -> {
       camera1 = CameraServer.getInstance().startAutomaticCapture(0);
       camera1.setResolution(640, 480);
       CvSink cvSink1 = CameraServer.getInstance().getVideo();
@@ -129,6 +136,8 @@ public class Robot extends TimedRobot {
       
       
     });*/
+
+    CameraServer.getInstance().startAutomaticCapture();
 
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -151,6 +160,8 @@ public class Robot extends TimedRobot {
 
     }
   }
+
+  
 
   /**
    * This function is called once each time the robot enters Disabled mode.

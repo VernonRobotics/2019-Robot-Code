@@ -28,8 +28,17 @@ public class TowerSubsystem extends Subsystem {
     setDefaultCommand(new MoveTower());
   }
 
-  public void moveTower(JsScaled joystsick) {
-    tower.set(joystsick.sgetX());
+  public void moveTower(JsScaled joystick) {
+    /*if(tower.getSelectedSensorPosition() >= -10 && joystick.sgetY() < 0) {
+      tower.set(joystick.sgetY());
+    } else {
+      tower.set(0);
+    }*/
+    tower.set(joystick.sgetY());
+  }
+
+  public void calibrateTower() {
+    tower.setSelectedSensorPosition(0);
   }
 
   public void moveTowerAuto(double speed) {

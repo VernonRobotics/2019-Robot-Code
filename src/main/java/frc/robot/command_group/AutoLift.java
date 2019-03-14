@@ -37,7 +37,7 @@ public class AutoLift extends CommandGroup {
 
     addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
     addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
-    addSequential(new SynchronizedJacks(-.8), jackHeight);
+    addSequential(new SynchronizedJacks(-.8, jackHeight));
     addParallel(new SynchronizedJacks(jackHoldSpeed));
     addSequential(new DriveJackMotorAuto(RobotMap.frontJackLimitSwitch, driveSpeed));
     addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
@@ -45,6 +45,6 @@ public class AutoLift extends CommandGroup {
     addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
     addSequential(new DriveJackMotorAuto(RobotMap.backJackLimitSwitch, driveSpeed));
     addSequential(new LiftJacksAuto(RobotMap.backJack, .8), retractTime);
-    addSequential(new DriveAuto(0.2), 3);
+    //addSequential(new DriveAuto(0.1), 3);
   }
 }

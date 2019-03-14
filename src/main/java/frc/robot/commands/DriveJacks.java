@@ -10,21 +10,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class MoveJackMotor extends Command {
-  public MoveJackMotor() {
+public class DriveJacks extends Command {
+
+  private double speed;
+
+  public DriveJacks(double speed) {
     // Use requires() here to declare subsystem dependencies
+    this.speed = speed;
     requires(Robot.jacksDriveTrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.jacksDriveTrain.drive(speed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.jacksDriveTrain.drive(Robot.oi.utilityStick);
   }
 
   // Make this return true when this Command no longer needs to run execute()

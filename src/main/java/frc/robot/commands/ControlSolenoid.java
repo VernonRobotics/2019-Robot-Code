@@ -23,7 +23,7 @@ public class ControlSolenoid extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.armSubsystem.controlSolenoid(direction);
+    //Robot.armSubsystem.controlSolenoid(direction);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,7 +40,7 @@ public class ControlSolenoid extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.armSubsystem.controlSolenoid("reverse");
+    //Robot.armSubsystem.controlSolenoid("reverse");
   }
 
   // Called when another command which requires one or more of the same

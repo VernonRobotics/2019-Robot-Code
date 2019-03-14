@@ -48,7 +48,7 @@ public class Jacks extends Subsystem {
   
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new MoveJackMotor());
+    //setDefaultCommand();
   }
 
   public void driveForward(double speed) {

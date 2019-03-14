@@ -10,21 +10,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class MoveJackMotor extends Command {
-  public MoveJackMotor() {
+public class CalibrateTower extends Command {
+  public CalibrateTower() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.jacksDriveTrain);
+    requires(Robot.towerSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.towerSubsystem.calibrateTower();
+    System.out.print("Tower Calibrated");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.jacksDriveTrain.drive(Robot.oi.utilityStick);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +37,6 @@ public class MoveJackMotor extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.jacksDriveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same

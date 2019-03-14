@@ -15,22 +15,22 @@ import edu.wpi.first.wpilibj.Relay;
 public class RobotMap {
 
 	//Talons for drivetrain
-  	public static CANTalon1989 frontLeft = new CANTalon1989(9);
+  	public static CANTalon1989 frontLeft = new CANTalon1989(6);
 	public static CANTalon1989 backLeft = new CANTalon1989(7);
-	public static CANTalon1989 frontRight = new CANTalon1989(5);
+	public static CANTalon1989 frontRight = new CANTalon1989(9);
 	public static CANTalon1989 backRight = new CANTalon1989(1);
 
 	//Talons for jack
-	public static CANTalon1989 frontJack = new CANTalon1989(4);
-	public static CANTalon1989 backJack = new CANTalon1989(10);
+	public static CANTalon1989 frontJack = new CANTalon1989(5);
+	public static CANTalon1989 backJack = new CANTalon1989(3);
 
-	public static CANTalon1989 tower = new CANTalon1989(3);
+	public static CANTalon1989 tower = new CANTalon1989(2);
 
-	public static Relay hatchPanelSolenoid = new Relay(0);
-	public static CANTalon1989 ballMotor = new CANTalon1989(2);
+	//public static Relay hatchPanelSolenoid = new Relay(0);
+	public static CANTalon1989 ballMotor = new CANTalon1989(8);
 	
 	//Talon for jack motor
-	public static CANTalon1989 jackDrivenMotor = new CANTalon1989(6);
+	public static CANTalon1989 jackDrivenMotor = new CANTalon1989(4);
 	
 	//public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(); 
 	

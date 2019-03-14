@@ -20,14 +20,14 @@ public class OI {
   public JsScaled driveStick = new JsScaled(leftJoystickPort);
   public JsScaled utilityStick = new JsScaled(rightJoystickPort);
 
-  public Button visionAssist = new JoystickButton(driveStick, 1);
-  public Button activateJack = new JoystickButton(driveStick, 9);
+  //public Button visionAssist = new JoystickButton(driveStick, 1);
+  //public Button activateJack = new JoystickButton(driveStick, 9);
   public Button setDefaultConfig = new JoystickButton(utilityStick, 8);
   public Button overrideAutomatedCommands = new JoystickButton(driveStick, 5);
 
-  public Button hatchPanelControl = new JoystickButton(utilityStick, 1);
-  public Button ballIntake = new JoystickButton(utilityStick, 2);
-  public Button ballOutput = new JoystickButton(utilityStick, 3);
+  //public Button hatchPanelControl = new JoystickButton(utilityStick, 1);
+  public Button ballIntake = new JoystickButton(utilityStick, 1);
+  public Button ballOutput = new JoystickButton(utilityStick, 2);
 
   //Test Jacks
   //public Button allJacksRetract = new JoystickButton(utilityStick, 9);
@@ -39,13 +39,24 @@ public class OI {
   public Button frontJacksDown = new JoystickButton(utilityStick, 7);
   public Button backJacksDown = new JoystickButton(utilityStick, 8);
 
-  public Button calibrate = new JoystickButton(utilityStick, 2);
+  public Button calibrateJacks = new JoystickButton(driveStick, 5);
+  public Button calibrateTower = new JoystickButton(utilityStick, 5);
+
+  public Button driveJacksForward = new JoystickButton(driveStick, 3);
+  public Button driveJacksBackward = new JoystickButton(driveStick, 4);
+
+  public Button stageOne = new JoystickButton(driveStick, 7);
+  public Button stageTwo = new JoystickButton(driveStick, 8);
+  public Button stageThree = new JoystickButton(driveStick, 9);
+  public Button stageFour = new JoystickButton(driveStick, 10);
+  public Button stageFive = new JoystickButton(driveStick, 11);
+  public Button stageEmergency = new JoystickButton(driveStick, 12);
 
   public OI() {
-    visionAssist.whileHeld(new AssistedDrive());
-    activateJack.whenPressed(new AutoLift("high"));
+    //visionAssist.whileHeld(new AssistedDrive());
+    //activateJack.whenPressed(new AutoLift("high"));
     //setDefaultConfig.whenPressed(new Command);
-    overrideAutomatedCommands.cancelWhenPressed(new AutoLift("high"));
+    //overrideAutomatedCommands.cancelWhenPressed(new AutoLift("high"));
 
     // Test Jacks
     /*allJacksUp.whileHeld(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .5, .5));
@@ -61,7 +72,7 @@ public class OI {
     backJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
 
     frontJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, 0));
-    backJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -1));
+    backJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.3));
     frontJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     backJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     
@@ -77,17 +88,35 @@ public class OI {
     //allJacksRetract.whenPressed(new SynchronizedJacks(.8));
     //allJacksRetract.whenPressed(new SynchronizedJacks(0));
 
-    calibrate.whenPressed(new CalibrateJacks(-.5, -.5));
-    calibrate.whenReleased(new CalibrateJacks(0, 0));
+    calibrateJacks.whenPressed(new CalibrateJacks(-.4, -.4));
+    calibrateJacks.whenReleased(new CalibrateJacks(0, 0));
 
-    hatchPanelControl.whenPressed(new ControlSolenoid("forward"));
-    hatchPanelControl.whenReleased(new ControlSolenoid("reverse"));
+    //hatchPanelControl.whenPressed(new ControlSolenoid("forward"));
+    //hatchPanelControl.whenReleased(new ControlSolenoid("reverse"));
 
-    ballIntake.whenPressed(new BallMechanism(1));
+    ballIntake.whenPressed(new BallMechanism(.8));
     ballIntake.whenReleased(new BallMechanism(0));
 
-    ballOutput.whenPressed(new BallMechanism(-1));
+    ballOutput.whenPressed(new BallMechanism(-.8));
     ballOutput.whenReleased(new BallMechanism(0));
+
+    stageOne.whenPressed(new SynchronizedJacks(-.8));
+    stageOne.whenReleased(new SynchronizedJacks(0));
+    stageTwo.whenPressed(new SynchronizedJacks(-.3));
+    stageTwo.whenReleased(new SynchronizedJacks(0));
+    stageThree.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .5, -.3));
+    stageThree.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    stageFour.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.3));
+    stageFour.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    stageFive.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, .5));
+    stageFive.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    stageEmergency.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.5));
+    stageEmergency.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+
+    driveJacksForward.whenPressed(new DriveJacks(0.3));
+    driveJacksForward.whenReleased(new DriveJacks(0));
+    driveJacksBackward.whenPressed(new DriveJacks(-0.3));
+    driveJacksBackward.whenReleased(new DriveJacks(0));
 
   }
 

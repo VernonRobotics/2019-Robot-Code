@@ -20,7 +20,7 @@ public class ArmSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   private CANTalon1989 ballMotor = RobotMap.ballMotor;
-  private Relay hatchPanelSolenoid = RobotMap.hatchPanelSolenoid;
+  //private Relay hatchPanelSolenoid = RobotMap.hatchPanelSolenoid;
 
   @Override
   public void initDefaultCommand() {
@@ -28,13 +28,13 @@ public class ArmSubsystem extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void controlSolenoid(String status) {
+  /*public void controlSolenoid(String status) {
     if(status == "forward") {
       hatchPanelSolenoid.set(Relay.Value.kOn);
     } else if(status == "reverse") {
       hatchPanelSolenoid.set(Relay.Value.kOff);
     } 
-  }
+  }*/
 
   public void ballMechanism(double speed) {
     ballMotor.set(speed);
