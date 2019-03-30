@@ -18,7 +18,8 @@ import frc.robot.RobotMap;
 public class ArmSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  
+  private double ballPickupSpeed = 1;
   private CANTalon1989 ballMotor = RobotMap.ballMotor;
   //private Relay hatchPanelSolenoid = RobotMap.hatchPanelSolenoid;
 
@@ -37,11 +38,19 @@ public class ArmSubsystem extends Subsystem {
   }*/
 
   public void ballMechanism(double speed) {
-    ballMotor.set(speed);
+    ballMotor.set(speed/ballPickupSpeed);
   }
 
   public void stop() {
     ballMotor.stopMotor();
+  }
+
+  public void toggleBallPickupSpeed() {
+    if(ballPickupSpeed == 1) {
+      ballPickupSpeed = .5;
+    } else {
+      ballPickupSpeed = 1;
+    }
   }
 
 }

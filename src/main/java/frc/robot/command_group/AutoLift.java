@@ -14,37 +14,26 @@ import frc.robot.commands.*;
 
 public class AutoLift extends CommandGroup {
 
-  public AutoLift(String platform) {
+  public AutoLift() {
 
-    final int jackHeight;
-
-    if(platform.equals("high")) {
-      jackHeight = 0;
-    } else {
-      jackHeight = 0;
-    }
-
-    requires(Robot.jacks);
-    requires(Robot.jacksDriveTrain);
-    requires(Robot.driveTrain);
-
+    final int jackHeight = 1700;
     final double jackHoldSpeed = -0.3;
     final double jackCalibrateSpeed = -0.2;
     final double liftTime = 3;
-    final double retractTime = 3;
+    final double retractTime = 2.6;
     final double liftSpeed = 0.5;
-    final double driveSpeed = 1;
+    final double driveSpeed = .4;
 
-    addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
-    addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
+    //addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
+    //addSequential(new CalibrateJacks(jackCalibrateSpeed, jackCalibrateSpeed));
     addSequential(new SynchronizedJacks(-.8, jackHeight));
     addParallel(new SynchronizedJacks(jackHoldSpeed));
     addSequential(new DriveJackMotorAuto(RobotMap.frontJackLimitSwitch, driveSpeed));
     addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
-    addSequential(new LiftJacksAuto(RobotMap.frontJack, .8), retractTime);
+    addSequential(new LiftJacksAuto(RobotMap.frontJack, .8, true));
     addParallel(new LiftJacksAuto(RobotMap.backJack, jackHoldSpeed));
     addSequential(new DriveJackMotorAuto(RobotMap.backJackLimitSwitch, driveSpeed));
-    addSequential(new LiftJacksAuto(RobotMap.backJack, .8), retractTime);
+    addSequential(new LiftJacksAuto(RobotMap.backJack, .8, true));
     //addSequential(new DriveAuto(0.1), 3);
   }
 }

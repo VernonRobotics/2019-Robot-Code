@@ -38,7 +38,7 @@ public class DriveJackMotorAuto extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.jacksDriveTrain.checkLimitSwitch(limitSwitch);
+    return !Robot.jacksDriveTrain.checkLimitSwitch(limitSwitch);
   }
 
   // Called once after isFinished returns true

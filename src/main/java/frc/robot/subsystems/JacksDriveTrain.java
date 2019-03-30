@@ -42,11 +42,7 @@ public class JacksDriveTrain extends Subsystem {
   }
 
   public boolean checkLimitSwitch(DigitalInput limitSwitch) {
-    if(limitSwitch.get()) {
-      return false;
-    } else {
-      return true;
-    }
+    return limitSwitch.get();
   }
 
 }

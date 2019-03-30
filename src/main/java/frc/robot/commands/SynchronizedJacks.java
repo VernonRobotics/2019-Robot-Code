@@ -44,7 +44,11 @@ public class SynchronizedJacks extends Command {
   @Override
   protected boolean isFinished() {
     if(encoderGoal == 0) {
-      return false;
+      if(!RobotMap.frontJackLimitSwitch.get() || !RobotMap.backJackLimitSwitch.get()) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       if(RobotMap.frontJack.getSelectedSensorPosition() >= encoderGoal && RobotMap.backJack.getSelectedSensorPosition() >= encoderGoal) {
         return true;

@@ -234,15 +234,22 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //System.out.print(RobotMap.jackDrivenMotor.getSelectedSensorPosition());
     //System.out.print(RobotMap.frontJack.getOutputCurrent());
-    System.out.print(" " + RobotMap.frontJack.getSelectedSensorPosition());
-    System.out.print(" " + RobotMap.backJack.getSelectedSensorPosition()+ "\n");
+
+    //System.out.print(" " + RobotMap.frontJack.getSelectedSensorPosition());
+    //System.out.print(" " + RobotMap.backJack.getSelectedSensorPosition()+ "\n");
+    
+    System.out.println(RobotMap.frontJackLimitSwitch.get() + " " + RobotMap.backJackLimitSwitch.get());
     //System.out.println(" " + RobotMap.frontJack.get() + " " + RobotMap.backJack.get() + " ");
     /*if(RobotMap.frontJack.getOutputCurrent() > 2 || RobotMap.backJack.getOutputCurrent() > 2) {
       System.out.print(RobotMap.frontJack.getOutputCurrent()+" ");
       System.out.println(RobotMap.backJack.getOutputCurrent());
     }*/
-
-    Scheduler.getInstance().run();
+    if(oi.driveStick.getRawButton(3)) {
+      Scheduler.getInstance().removeAll();
+    } else {
+      Scheduler.getInstance().run();
+    }
+    //Scheduler.getInstance().run();
   }
 
   /**

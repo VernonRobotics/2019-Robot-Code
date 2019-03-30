@@ -21,6 +21,7 @@ public class TowerSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   CANTalon1989 tower = RobotMap.tower;
+  private double towerSpeed = 1;
 
   @Override
   public void initDefaultCommand() {
@@ -34,7 +35,7 @@ public class TowerSubsystem extends Subsystem {
     } else {
       tower.set(0);
     }*/
-    tower.set(joystick.sgetY());
+    tower.set(joystick.sgetY()/towerSpeed);
   }
 
   public void calibrateTower() {
@@ -47,6 +48,10 @@ public class TowerSubsystem extends Subsystem {
 
   public void stopTower() {
     tower.set(0);
+  }
+
+  public void setTowerSpeed(double towerSpeed) {
+    this.towerSpeed = towerSpeed;
   }
 
 }

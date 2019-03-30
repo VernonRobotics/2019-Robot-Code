@@ -8,9 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.*;
 import frc.robot.command_group.*;
+import frc.robot.Robot;
 
 public class OI {
 
@@ -21,13 +24,15 @@ public class OI {
   public JsScaled utilityStick = new JsScaled(rightJoystickPort);
 
   //public Button visionAssist = new JoystickButton(driveStick, 1);
-  //public Button activateJack = new JoystickButton(driveStick, 9);
+  public Button autoJack = new JoystickButton(driveStick, 7);
   public Button setDefaultConfig = new JoystickButton(utilityStick, 8);
-  public Button overrideAutomatedCommands = new JoystickButton(driveStick, 5);
+  //public Button overrideAutomatedJacks = new JoystickButton(driveStick, 1);
+  //public Button towerHalfSpeed = new JoystickButton(utilityStick, 3);
 
   //public Button hatchPanelControl = new JoystickButton(utilityStick, 1);
   public Button ballIntake = new JoystickButton(utilityStick, 1);
   public Button ballOutput = new JoystickButton(utilityStick, 2);
+  //public Button ballHalfSpeed = new JoystickButton(utilityStick, 4);
 
   //Test Jacks
   //public Button allJacksRetract = new JoystickButton(utilityStick, 9);
@@ -36,7 +41,7 @@ public class OI {
   public Button frontJacksRetract = new JoystickButton(utilityStick, 11);
   public Button backJacksRetract = new JoystickButton(utilityStick, 12);
 
-  public Button frontJacksDown = new JoystickButton(utilityStick, 7);
+  //public Button frontJacksDown = new JoystickButton(utilityStick, 7);
   public Button backJacksDown = new JoystickButton(utilityStick, 8);
 
   public Button calibrateJacks = new JoystickButton(driveStick, 5);
@@ -54,9 +59,11 @@ public class OI {
 
   public OI() {
     //visionAssist.whileHeld(new AssistedDrive());
-    //activateJack.whenPressed(new AutoLift("high"));
+    //AutoLift autoLift = new AutoLift();
+
+    autoJack.whenPressed(new AutoLift());
     //setDefaultConfig.whenPressed(new Command);
-    //overrideAutomatedCommands.cancelWhenPressed(new AutoLift("high"));
+    //overrideAutomatedJacks.cancelWhenPressed(autoLift);
 
     // Test Jacks
     /*allJacksUp.whileHeld(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, .5, .5));
@@ -71,9 +78,9 @@ public class OI {
     frontJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     backJacksRetract.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
 
-    frontJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, 0));
+    //frontJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, 0));
     backJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, -.3));
-    frontJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
+    //frontJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     backJacksDown.whenReleased(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, 0, 0));
     
     //allJacksDown.whenPressed(new MoveJacksOnButton(RobotMap.frontJack, RobotMap.backJack, -1, -1));
@@ -117,6 +124,11 @@ public class OI {
     driveJacksForward.whenReleased(new DriveJacks(0));
     driveJacksBackward.whenPressed(new DriveJacks(-0.3));
     driveJacksBackward.whenReleased(new DriveJacks(0));
+
+    //towerHalfSpeed.whenPressed(new SetTowerSpeed(.5));
+    //towerHalfSpeed.whenReleased(new SetTowerSpeed(1));
+
+    //ballHalfSpeed.toggleWhenPressed(new SetBallSpeed());;
 
   }
 
